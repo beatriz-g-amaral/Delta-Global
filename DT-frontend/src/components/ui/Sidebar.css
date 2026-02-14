@@ -11,7 +11,8 @@
   top: 0;
   transition: width 0.3s ease;
   z-index: 1000;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .sidebar.open {
@@ -84,7 +85,19 @@
   margin-top: auto;
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 3rem;
+
+}
+
+.sidebar-item.logout {
+  color: #ff4d4d;
+}
+
+.sidebar-item.logout:hover {
+  background-color: #fff0f0;
 }
 
 .sidebar-indicator {

@@ -31,9 +31,13 @@ class AuthController extends BaseController
             return $this->failUnauthorized('Invalid Email or Password');
         }
 
-        $token = bin2hex(random_bytes(16)); 
+        $token = bin2hex(random_bytes(16));
+        $expiresAt = date('Y-m-d H:i:s', strtotime('+2 hours'));
 
-        $teacherModel->update($user['id'], ['token' => $token]);
+        $teacherModel->update($user['id'], [
+            'token' => $token,
+            'token_expires_at' => $expiresAt
+        ]);
 
         return $this->respond([
             'status' => true,

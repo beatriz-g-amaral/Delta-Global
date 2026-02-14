@@ -20,8 +20,10 @@ class CreateClassTable extends Migration
                 'constraint' => '100',
             ],
             'teacher_id' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '100',
+                'type'       => 'INT',
+                'constraint' => 11,
+                'unsigned'   => true,
+                'null'       => true,
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -40,6 +42,6 @@ class CreateClassTable extends Migration
 
     public function down()
     {
-        $this->forge->dropTable('class');
+        $this->forge->dropTable('classes');
     }
 }

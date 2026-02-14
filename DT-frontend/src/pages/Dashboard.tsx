@@ -1,37 +1,42 @@
 import { Sidebar } from '../components/ui/Sidebar';
 import { StudentCard } from '../components/students/Card';
-import { useDashboard } from '../hooks/use-dashboard';
-import './Dashboard.css';
+import { useStudents } from '../hooks/use-students';
+import './CommonLayout.css';
 import { Student } from '../types/Students';
 
 export default function Dashboard() {
    const {
-      getLastStudents
-    } = useDashboard();
+      students
+    } = useStudents();
   return (
-    <div className="dashboard-container">
+    <div className="page-container">
       <Sidebar />
-      <main className="dashboard-main">
-        <header className="dashboard-header">
+      <main className="page-main">
+        <header className="page-header">
           <div className="header-info">
-            <h1 className="dashboard-title">Dashboard</h1>
-            <p className="dashboard-subtitle">Bem-vindo ao sistema de gestão escolar</p>
+            <h1 className="page-title">Dashboard</h1>
+            <p className="page-subtitle">Bem-vindo ao sistema de gestão escolar</p>
           </div>
         </header>
 
-        <section className="dashboard-content">
+        <section className="page-content">
           <div className="section-header">
             <h2 className="section-title">Alunos Recentes</h2>
-            <button className="view-all-btn">Ver todos</button>
           </div>
-          <div className="students-list">
-            {getLastStudents.map((student: Student) => (
-              <StudentCard
-                key={student.id}
-                name={student.name}
-                className={student.class_name}
-              />
-            ))}
+          <div className="items-grid">
+            {students.length > 0 ? (
+              students.map((student: Student) => (
+                <StudentCard
+                  key={student.id}
+                  name={student.name}
+                  class_name={student.class_name}
+                  address={student.address}
+                  picture={student.picture}
+                />
+              ))
+            ) : (
+              <p style={{ color: '#64748b', textAlign: 'center', padding: '2rem' }}>Nenhum aluno cadastrado.</p>
+            )}
           </div>
         </section>
       </main>

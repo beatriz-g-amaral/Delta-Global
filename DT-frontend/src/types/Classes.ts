@@ -1,4 +1,4 @@
-export interface ClassRoom {
+export interface Classes {
   id: number;
   name: string;
   teacher_id: number;
@@ -9,5 +9,5 @@ export interface ClassRoom {
 export interface ClassesResponse {
   status: boolean;
   message?: string;
-  result: Array<ClassRoom> | ClassRoom;
+  result: Array<Classes> | Classes;
 }

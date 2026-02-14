@@ -25,6 +25,10 @@ class AuthFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
+        if ($request->getMethod() === 'options') {
+            return;
+        }
+
         $authHeader = $request->getHeaderLine('Authorization');
 
        if (!$authHeader) {
@@ -37,7 +41,11 @@ class AuthFilter implements FilterInterface
         $user = $teacherModel->where('token', $token)->first();
 
         if (!$user) {
-            return service('response')->setJSON(['message' => 'Token is invalid or expired'])->setStatusCode(401);
+            return service('response')->setJSON(['message' => 'Token is invalid'])->setStatusCode(401);
+        }
+
+        if ($user['token_expires_at'] && strtotime($user['token_expires_at']) < time()) {
+            return service('response')->setJSON(['message' => 'Token has expired'])->setStatusCode(401);
         }
         
     }

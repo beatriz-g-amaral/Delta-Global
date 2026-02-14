@@ -17,7 +17,16 @@ class StudentsController extends ResourceController
                      ->join('classes', 'classes.id = students.class_id', 'left')
                      ->findAll();
 
-        return $this->respond($data);
+        foreach ($data as &$student) {
+            if ($student['picture']) {
+                $student['picture'] = base_url($student['picture']);
+            }
+        }
+
+        return $this->respond([
+            'status' => true,
+            'result' => $data
+        ]);
     }
 
     public function create()
@@ -26,19 +35,21 @@ class StudentsController extends ResourceController
             'name'     => 'required|min_length[3]',
             'email'    => 'required|valid_email|is_unique[students.email]',
             'class_id' => 'required|is_not_unique[classes.id]',
-            'picture'  => 'uploaded[picture]|max_size[picture,2048]|is_image[picture]'
+            'picture'  => 'permit_empty|uploaded[picture]|max_size[picture,2048]|is_image[picture]'
         ];
 
         if (!$this->validate($rules)) {
             return $this->fail($this->validator->getErrors());
         }
 
-        $file = $this->request->getFile('picture');
-        $newName = $file->getRandomName();
-        $file->move(ROOTPATH . 'public/uploads/students', $newName);
-
         $data = $this->request->getPost();
-        $data['picture'] = 'uploads/students/' . $newName;
+        $file = $this->request->getFile('picture');
+        
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $newName = $file->getRandomName();
+            $file->move(ROOTPATH . 'public/uploads/students', $newName);
+            $data['picture'] = 'uploads/students/' . $newName;
+        }
 
         if ($this->model->insert($data)) {
             return $this->respondCreated(['status' => true, 'message' => 'Student saved!']);
@@ -49,8 +60,12 @@ class StudentsController extends ResourceController
 
     public function update($id = null)
     {
-        $data = $this->request->getRawInput();
+        $data = $this->request->getPost();
         
+        if (empty($data)) {
+            $data = $this->request->getRawInput();
+        }
+
         $rules = [
             'name'     => 'permit_empty|min_length[3]',
             'email'    => "permit_empty|valid_email|is_unique[students.email,id,{$id}]",
@@ -66,6 +81,12 @@ class StudentsController extends ResourceController
             $newName = $file->getRandomName();
             $file->move(ROOTPATH . 'public/uploads/students', $newName);
             $data['picture'] = 'uploads/students/' . $newName;
+        }
+
+        unset($data['_method']);
+
+        if (empty($data)) {
+            return $this->respond(['status' => true, 'message' => 'Nothing to update']);
         }
 
         if ($this->model->update($id, $data)) {

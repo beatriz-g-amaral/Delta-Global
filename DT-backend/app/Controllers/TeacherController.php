@@ -17,7 +17,10 @@ class TeacherController extends ResourceController
                      ->select('id, name, email, subject, picture, created_at')
                      ->findAll();
 
-        return $this->respond($teachers);
+         return $this->respond([
+            'status' => true,
+            'result' => $teachers
+        ]);
     }
 
     public function create()
@@ -27,20 +30,23 @@ class TeacherController extends ResourceController
             'email'    => 'required|valid_email|is_unique[teachers.email]',
             'password' => 'required|min_length[6]',
             'subject'  => 'required|min_length[3]',
-            'picture'  => 'uploaded[picture]|max_size[picture,2048]|is_image[picture]'
+            'picture'  => 'permit_empty|uploaded[picture]|max_size[picture,2048]|is_image[picture]'
         ];
 
         if (!$this->validate($rules)) {
             return $this->fail($this->validator->getErrors());
         }
 
-        $file = $this->request->getFile('picture');
-        $newName = $file->getRandomName();
-        $file->move(ROOTPATH . 'public/uploads/teachers', $newName);
-
         $data = $this->request->getPost();
+        $file = $this->request->getFile('picture');
+
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $newName = $file->getRandomName();
+            $file->move(ROOTPATH . 'public/uploads/teachers', $newName);
+            $data['picture'] = 'uploads/teachers/' . $newName;
+        }
+
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        $data['picture'] = 'uploads/teachers/' . $newName;
 
         if ($this->model->insert($data)) {
             return $this->respondCreated(['status' => true, 'message' => 'Teacher saved!']);

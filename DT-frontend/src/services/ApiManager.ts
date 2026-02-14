@@ -79,18 +79,17 @@ type ConnectionErrorListener = () => void;
           },
         }
   
-        if (body && (callType === ApiCallType.POST || callType === ApiCallType.PUT)) {
+        if (body && (callType === ApiCallType.POST || callType === ApiCallType.PUT || callType === ApiCallType.DELETE)) {
           if (bodyType === BodyType.JSON) {
             options.headers = {
               ...options.headers,
               "Content-Type": "application/json",
             }
-            options.body = JSON.stringify(body)
-            }
+            options.body = JSON.stringify(body);
+          } else if (bodyType === BodyType.MULTIPART) {
+            options.body = body as unknown as FormData;
           }
-          else if (body && bodyType === BodyType.MULTIPART) {
-            options.body = body as unknown as FormData
-          }
+        }
   
         const response = await fetch(url.toString(), options)
         if (!response.ok) {

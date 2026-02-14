@@ -4,11 +4,15 @@ import { Student } from '../../types/Students';
 
 
 
-export function StudentCard({ name, class_name,address }: Student) {
+export function StudentCard({ name, class_name, address, picture }: Partial<Student>) {
   return (
     <div className="student-card">
       <div className="student-avatar">
-        <User size={48} fill="currentColor" />
+        {picture ? (
+          <img src={picture} alt={name} className="student-avatar-img" />
+        ) : (
+          <User size={48} fill="currentColor" />
+        )}
       </div>
       <div className="student-info">
         <div className="student-header">
