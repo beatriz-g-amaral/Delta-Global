@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: dt_mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: dt_deltaglobal
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  backend:
+    build: ./DT-backend
+    container_name: dt_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      database.default.hostname: db
+      database.default.database: dt_deltaglobal
+      database.default.username: root
+      database.default.password: root
+
+  frontend:
+    build: ./DT-frontend
+    container_name: dt_frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:8080
+
+volumes:
+  db_data:
