@@ -5,6 +5,7 @@ import { Student } from "../types/Students";
 
 export function useStudents() {
     const [students, setStudents] = useState<Student[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     const fetchStudents = useCallback(async (filters?: Record<string, string | number | boolean | undefined>) => {
         const token = localStorage.getItem("token") || "";
@@ -14,6 +15,7 @@ export function useStudents() {
             const result = response.data.result;
             setStudents(Array.isArray(result) ? result : [result]);
         } else {
+            setError(response.error || "Erro ao carregar alunos");
             console.error("Failed to fetch students:", response.error);
         }
     }, []);
@@ -25,11 +27,13 @@ export function useStudents() {
         if (response.success) {
             setStudents((prev) => prev.filter((student) => student.id !== id));
         } else {
+            setError(response.error || "Erro ao remover aluno");
             console.error("Failed to remove student:", response.error);
         }
     };
 
     const addStudent = async (studentData: Omit<Student, "id"> & { pictureFile?: File | undefined }) => {
+        setError(null);
         const token = localStorage.getItem("token") || "";
         const response = await StudentsCall.create({
             token,
@@ -48,7 +52,9 @@ export function useStudents() {
                 setStudents((prev) => [...prev, newStudent]);
             }
         } else {
+            setError(response.error || "Erro ao adicionar aluno");
             console.error("Failed to add student:", response.error);
+            throw new Error(response.error || "Erro ao adicionar aluno");
         }
     };
 
@@ -83,12 +89,16 @@ export function useStudents() {
                 setStudents((prev) => prev.map((s) => s.id === updatedStudent.id ? updatedStudent : s));
             }
         } else {
+            setError(response.error || "Erro ao atualizar aluno");
             console.error("Failed to update student:", response.error);
+            throw new Error(response.error || "Erro ao atualizar aluno");
         }
     };
 
     return {
         students,
+        error,
+        setError,
         fetchStudentsWithFilters,
         removeStudent,
         addStudent,

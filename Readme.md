@@ -20,12 +20,17 @@ seguintes tarefas:
 5. Excluir um aluno do sistema.
 
 Como iniciar a avaliação:
-Pelo docker: docker compose up --build.
-Fora do docker: Seguir ReadMe das aplicações.
+
+Pelo docker:
+Passo 1 - no DT-backend, renomear o arquivo env para .env;
+Passo 2 - rodar o comando docker compose up --build.
+Fora do docker: 
+Seguir ReadMe das aplicações.
 
 Fiz um professor de exemplo para possibilitar o login (a ideia é desenvolver futuramente a criação de professores)
 Usuário: mariasilva@example.com
 Senha: password123
+Para adicionar um aluno, é necessário criar uma turma para que está seja selecionada nas informações do aluno.
 
 Abordagem utilizada:
 
@@ -47,5 +52,5 @@ Optei por não desenvolver a tela de "professores" por questão de tempo, visto 
 
 Depois de uma revisão geral do código e mais uma rodada de testes, revisei o relatório, configurei o docker e fiz os testes necessários nele para a entrega.
 
-Possíveis melhorias no sistema incluiriam melhorar o token para JWT, implementar a tela de professores, incluir um registro de presença na aula e permitir edição da foto.
+Possíveis melhorias no sistema incluiriam melhorar o token para JWT, implementar a tela de professores, incluir um registro de presença na aula, ao clicar na turma aparecer os alunos que fazem parte e permitir edição da foto.
 

@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Students() {
   const navigate = useNavigate();
-  const { students, removeStudent, addStudent, updateStudent, fetchStudentsWithFilters } = useStudents();
+  const { students, error, setError, removeStudent, addStudent, updateStudent, fetchStudentsWithFilters } = useStudents();
   const { classes } = useClasses();
   const [selectedStudentId, setSelectedStudentId] = useState<number | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -92,6 +92,8 @@ export default function Students() {
       setIsAddModalOpen(false);
       resetForm();
       await fetchStudentsWithFilters({});
+    } catch (err) {
+      console.error("Error adding student:", err);
     } finally {
       setIsSubmitting(false);
     }
@@ -130,6 +132,8 @@ export default function Students() {
         setIsEditModalOpen(false);
         resetForm();
         await fetchStudentsWithFilters({});
+      } catch (err) {
+        console.error("Error updating student:", err);
       } finally {
         setIsSubmitting(false);
       }
@@ -236,7 +240,7 @@ export default function Students() {
 
         <Modal
           isOpen={isAddModalOpen}
-          onClose={() => { if (!isSubmitting) { setIsAddModalOpen(false); resetForm(); } }}
+          onClose={() => { if (!isSubmitting) { setIsAddModalOpen(false); resetForm(); setError(null); } }}
           title="Adicionar Novo Aluno"
           footer={
             <>
@@ -246,6 +250,11 @@ export default function Students() {
           }
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {error && (
+              <div style={{ padding: '0.75rem', backgroundColor: '#fee2e2', color: '#b91c1c', borderRadius: '0.375rem', fontSize: '0.875rem' }}>
+                {error}
+              </div>
+            )}
             <Input label="Nome" name="name" value={formData.name} onChange={handleInputChange} placeholder="Nome completo" disabled={isSubmitting} />
             <Input label="E-mail" name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder="email@exemplo.com" disabled={isSubmitting} />
             <Input label="Telefone" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="(00) 00000-0000" disabled={isSubmitting} />
@@ -265,7 +274,7 @@ export default function Students() {
 
         <Modal
           isOpen={isEditModalOpen}
-          onClose={() => { if (!isSubmitting) { setIsEditModalOpen(false); resetForm(); } }}
+          onClose={() => { if (!isSubmitting) { setIsEditModalOpen(false); resetForm(); setError(null); } }}
           title="Editar Aluno"
           footer={
             <>
@@ -275,6 +284,11 @@ export default function Students() {
           }
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {error && (
+              <div style={{ padding: '0.75rem', backgroundColor: '#fee2e2', color: '#b91c1c', borderRadius: '0.375rem', fontSize: '0.875rem' }}>
+                {error}
+              </div>
+            )}
             <Input label="Nome" name="name" value={formData.name} onChange={handleInputChange} disabled={isSubmitting} />
             <Input label="E-mail" name="email" type="email" value={formData.email} onChange={handleInputChange} disabled={isSubmitting} />
             <Input label="Telefone" name="phone" value={formData.phone} onChange={handleInputChange} disabled={isSubmitting} />

@@ -34,12 +34,18 @@ class StudentsController extends ResourceController
         $rules = [
             'name'     => 'required|min_length[3]',
             'email'    => 'required|valid_email|is_unique[students.email]',
+            'phone'    => 'required|numeric',
             'class_id' => 'required|is_not_unique[classes.id]',
             'picture'  => 'permit_empty|uploaded[picture]|max_size[picture,2048]|is_image[picture]'
         ];
 
         if (!$this->validate($rules)) {
-            return $this->fail($this->validator->getErrors());
+            $errors = $this->validator->getErrors();
+            return $this->fail([
+                'status'  => false,
+                'message' => 'Erro de validação',
+                'errors'  => $errors
+            ], 400);
         }
 
         $data = $this->request->getPost();
@@ -52,10 +58,28 @@ class StudentsController extends ResourceController
         }
 
         if ($this->model->insert($data)) {
-            return $this->respondCreated(['status' => true, 'message' => 'Student saved!']);
+            $insertedId = $this->model->getInsertID();
+            $newStudent = $this->model
+                               ->select('students.*, classes.name as class_name')
+                               ->join('classes', 'classes.id = students.class_id', 'left')
+                               ->find($insertedId);
+            
+            if ($newStudent && $newStudent['picture']) {
+                $newStudent['picture'] = base_url($newStudent['picture']);
+            }
+
+            return $this->respondCreated([
+                'status'  => true,
+                'message' => 'Student saved!',
+                'result'  => $newStudent
+            ]);
         }
 
-        return $this->fail($this->model->errors());
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Erro ao salvar estudante',
+            'errors'  => $this->model->errors()
+        ]);
     }
 
     public function update($id = null)
@@ -69,6 +93,7 @@ class StudentsController extends ResourceController
         $rules = [
             'name'     => 'permit_empty|min_length[3]',
             'email'    => "permit_empty|valid_email|is_unique[students.email,id,{$id}]",
+            'phone'    => 'permit_empty|numeric',
             'class_id' => 'permit_empty|is_not_unique[classes.id]'
         ];
 

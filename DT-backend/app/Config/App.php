@@ -15,6 +15,8 @@ class App extends BaseConfig
      * WITH a trailing slash:
      *
      * E.g., http://example.com/
+     *
+     * @var string
      */
     public string $baseURL = 'http://localhost:8080/';
 
@@ -39,6 +41,8 @@ class App extends BaseConfig
      * Typically, this will be your `index.php` file, unless you've renamed it to
      * something else. If you have configured your web server to remove this file
      * from your site URIs, set this variable to an empty string.
+     *
+     * @var string
      */
     public string $indexPage = 'index.php';
 
@@ -56,6 +60,8 @@ class App extends BaseConfig
      *    'PATH_INFO': Uses $_SERVER['PATH_INFO']
      *
      * WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
+     *
+     * @var string
      */
     public string $uriProtocol = 'REQUEST_URI';
 
@@ -92,8 +98,10 @@ class App extends BaseConfig
      * is viewing the site from. It affects the language strings and other
      * strings (like currency markers, numbers, etc), that your program
      * should run under for this request.
+     *
+     * @var string
      */
-    public string $defaultLocale = 'en';
+    public string $defaultLocale = 'pt-BR';
 
     /**
      * --------------------------------------------------------------------------
@@ -104,6 +112,8 @@ class App extends BaseConfig
      * language to use based on the value of the Accept-Language header.
      *
      * If false, no automatic detection will be performed.
+     *
+     * @var bool
      */
     public bool $negotiateLocale = false;
 
@@ -120,7 +130,7 @@ class App extends BaseConfig
      *
      * @var list<string>
      */
-    public array $supportedLocales = ['en'];
+    public array $supportedLocales = ['pt-BR', 'en'];
 
     /**
      * --------------------------------------------------------------------------
@@ -132,6 +142,8 @@ class App extends BaseConfig
      *
      * @see https://www.php.net/manual/en/timezones.php for list of timezones
      *      supported by PHP.
+     *
+     * @var string
      */
     public string $appTimezone = 'UTC';
 
@@ -144,6 +156,8 @@ class App extends BaseConfig
      * that require a character set to be provided.
      *
      * @see http://php.net/htmlspecialchars for a list of supported charsets.
+     *
+     * @var string
      */
     public string $charset = 'UTF-8';
 
@@ -156,6 +170,8 @@ class App extends BaseConfig
      * made via a secure connection (HTTPS). If the incoming request is not
      * secure, the user will be redirected to a secure version of the page
      * and the HTTP Strict Transport Security (HSTS) header will be set.
+     *
+     * @var bool
      */
     public bool $forceGlobalSecureRequests = false;
 
@@ -197,6 +213,8 @@ class App extends BaseConfig
      *
      * @see http://www.html5rocks.com/en/tutorials/security/content-security-policy/
      * @see http://www.w3.org/TR/CSP/
+     *
+     * @var bool
      */
     public bool $CSPEnabled = false;
 }

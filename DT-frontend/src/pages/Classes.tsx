@@ -12,7 +12,7 @@ import { Teacher } from '../types/Teachers';
 import { useEffect } from 'react';
 
 export default function ClassesPage() {
-  const { classes, removeClass, addClass, updateClass, fetchClassesWithFilters } = useClasses();
+  const { classes, error, setError, removeClass, addClass, updateClass, fetchClassesWithFilters } = useClasses();
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [selectedClassId, setSelectedClassId] = useState<number | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -79,6 +79,8 @@ export default function ClassesPage() {
       setIsAddModalOpen(false);
       resetForm();
       await fetchClassesWithFilters({});
+    } catch (err) {
+      console.error("Error adding class:", err);
     } finally {
       setIsSubmitting(false);
     }
@@ -106,6 +108,8 @@ export default function ClassesPage() {
         setIsEditModalOpen(false);
         resetForm();
         await fetchClassesWithFilters({});
+      } catch (err) {
+        console.error("Error updating class:", err);
       } finally {
         setIsSubmitting(false);
       }
@@ -173,7 +177,7 @@ export default function ClassesPage() {
 
         <Modal
           isOpen={isAddModalOpen}
-          onClose={() => { if (!isSubmitting) { setIsAddModalOpen(false); resetForm(); } }}
+          onClose={() => { if (!isSubmitting) { setIsAddModalOpen(false); resetForm(); setError(null); } }}
           title="Adicionar Nova Turma"
           footer={
             <>
@@ -183,6 +187,11 @@ export default function ClassesPage() {
           }
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {error && (
+              <div style={{ padding: '0.75rem', backgroundColor: '#fee2e2', color: '#b91c1c', borderRadius: '0.375rem', fontSize: '0.875rem' }}>
+                {error}
+              </div>
+            )}
             <Input label="Nome da Turma" name="name" value={formData.name} onChange={handleInputChange} placeholder="Ex: 1º Ano A" disabled={isSubmitting} />
             <div className="input-container">
               <label className="input-label">Professor</label>
@@ -198,7 +207,7 @@ export default function ClassesPage() {
 
         <Modal
           isOpen={isEditModalOpen}
-          onClose={() => { if (!isSubmitting) { setIsEditModalOpen(false); resetForm(); } }}
+          onClose={() => { if (!isSubmitting) { setIsEditModalOpen(false); resetForm(); setError(null); } }}
           title="Editar Turma"
           footer={
             <>
@@ -208,6 +217,11 @@ export default function ClassesPage() {
           }
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {error && (
+              <div style={{ padding: '0.75rem', backgroundColor: '#fee2e2', color: '#b91c1c', borderRadius: '0.375rem', fontSize: '0.875rem' }}>
+                {error}
+              </div>
+            )}
             <Input label="Nome da Turma" name="name" value={formData.name} onChange={handleInputChange} disabled={isSubmitting} />
             <div className="input-container">
               <label className="input-label">Professor</label>
