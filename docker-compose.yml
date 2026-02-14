@@ -39,7 +39,7 @@ services:
     depends_on:
       - backend
     environment:
-      - VITE_API_URL=http://localhost:8080/index.php
+      - VITE_API_URL=http://localhost:8080
 
 volumes:
   db_data:

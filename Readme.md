@@ -19,15 +19,13 @@ seguintes tarefas:
 4. Atualizar as informações de um aluno.
 5. Excluir um aluno do sistema.
 
-Como iniciar a avaliacao:
-Pelo docker: docker compose up --build
-Fora do docker: Seguir ReadMe das aplicacoes
+Como iniciar a avaliação:
+Pelo docker: docker compose up --build.
+Fora do docker: Seguir ReadMe das aplicações.
 
-Fiz um professor de exemplo( a ideia é ter a criacao de professorers)
-Usuairo: mariasilva@example.com
+Fiz um professor de exemplo para possibilitar o login (a ideia é desenvolver futuramente a criação de professores)
+Usuário: mariasilva@example.com
 Senha: password123
-
-Precisa criar uma turrma para poder criar um aluno.
 
 Abordagem utilizada:
 
