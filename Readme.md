@@ -19,14 +19,25 @@ seguintes tarefas:
 4. Atualizar as informações de um aluno.
 5. Excluir um aluno do sistema.
 
-Abordagem utilizada
-Para iniciar a criação do projeto, decidi, por melhor organizacao, deixar separado em uma pasta central com o nome da empresa e duas pastas para o frront e back end, nomeadas de DT(desafio tecnino)-front/back e junto disso o readme com as abordagens e informacoes revelantes ao projeto.
+Abordagem utilizada:
 
-Primeiramente quis focar em ter o banco de dados e uma tela inicial no froent end, entao defini primeior as estruturras de tabelas e quais informacoes eu ia utilizar(explicado maias tarrde) e criei o projeto react com o comando  npm create vite@latest DT-frontend -- --template react.
-Optei por utilizar Typescript focando em um codigo limpo, e bem estruturado.
+Para iniciar a criação do projeto, decidi, visando uma melhor organização, deixar separado uma pasta central com o nome da empresa dentro da qual há duas pastas para o front e back end, nomeadas de DT(desafio técnico)-front/back. Junto disso, adicionei o readme com as abordagens e informações relevantes ao projeto.
 
-Com as tabelas definidas e o frontend iniciado, comecei a trabalhar no desenho das telas, por questoes de facilidade de uso, eu defini algumas ideias no Canva e depois fui passando para uma IA para me ajudar em melhorar o layout.
+Primeiramente, quis focar em estruturar o banco de dados e uma tela inicial no froent end. Para isso, defini primeiro as estruturas de tabelas e as informações necessárias para o projeto. Para melhor segurança dos dados, optei pela criação de uma tabela de "teachers" (professores) para possibilitar uma tela de login. Também criei uma tabela de "classes"(turmas), para melhor categorizar os alunos. O projeto front end foi iniciado com o comando  npm create vite@latest DT-frontend -- --template react. Optei por utilizar Typescript focando em um código limpo e bem estruturado.
 
-Após isso, fiz a criacao dos componentes base e fui fazendo as telas com dados mockados. 
-Então voltei para o backend e comecei a crriar as migartion, os model e os controller. Apos criar o de studens, classes e teachers, eu fui para a criacao do login e do filtro para nao ter como acessar a api sem estar logado, optei por ser um teste tecnico e nao um ambiente de prroducao nao gerar token JWT e sim um token mais simples.Apos isso eu fui entao configurar o reract para poder fazerr as chamadas de api, definindo tipos e organizando as chamadas.
+Com as tabelas definidas e o front end iniciado, comecei a trabalhar no desenho das telas. Inicialmente, defini algumas ideias no Canva para serem melhor desenvolvidas posteriormente. Depois disso, criei os componentes base e fui fazendo as telas com dados mockados. 
+
+Voltei para o back end e iniciei o desenvolvimento das migrations, dos models e dos controllers. Ao finalizar os de students, classes e teachers, foquei na criação do login e do filtro para não ter como acessar a API sem estar logado. Por ser um teste técnico e não um ambiente de produção, optei por gerar um token mais simples, ao invés de um token JWT. Depois, desenvolvi o front end para poder fazer chamadas de API, definindo tipos e organizando as chamadas. Com essa base de aplicação concluída, a subi para o Github.
+
+Com algumas telas prontas (ex. dashboard, alunos e turmas), configurei o eslint e resolvi me voltar ao back end, visto que ainda não tinha testado as chamadas. Com o postman, criei os ambientes de testes e os comecei, resolvi alguns dos problemas e comecei a testagem das APIS, resolvendo as chamadas para funcionar no front end.
+
+Em seguida, foquei em criar os modais de criação e edição. Como as telas são bbastante semelhantes, apenas reaproveitei o layout.
+
+Fiz alguns testes de usabilidade e melhorei layouts e erros de português. Descobri alguns bugs que foram resolvidos parra, então, rodar o eslint e arrumar tipagens. 
+
+Optei por não desenvolver a tela de "professores" por questão de tempo, visto que os requisitos do teste técnico eram apenas voltados à parte dos alunos.
+
+Depois de uma revisão geral do código e mais uma rodada de testes, revisei o relatório, configurei o docker e fiz os testes necessários nele para a entrega.
+
+Possíveis melhorias no sistema incluiriam melhorar o token para JWT, implementar a tela de professores, incluir um registro de presença na aula e permitir edição da foto.
 

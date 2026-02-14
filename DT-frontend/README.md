@@ -1,16 +1,50 @@
-# React + Vite
+# Desafio Técnico -  Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Desenvolvido com **React 19**, **Vite** e **TypeScript**.
 
-Currently, two official plugins are available:
+## Como Iniciar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Você pode iniciar o projeto localmente de duas formas: usando Docker (recomendado) ou manualmente com npm.
 
-## React Compiler
+### 1. Usando Docker (Recomendado)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Certifique-se de estar na raiz do projeto (onde o arquivo `docker-compose.yml` está localizado).
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+docker-compose up --build
+
+
+O frontend ficará disponível em [http://localhost:5173](http://localhost:5173).
+
+### 2. Execução Manual
+
+Navegue até a pasta `DT-frontend`:
+
+cd DT-frontend
+
+Configure o arquivo `.env`:
+cp env .env
+
+Instale as dependências:
+
+npm install
+
+Inicie o servidor de desenvolvimento:
+
+npm run dev
+
+
+## Tecnologias Utilizadas
+
+- **React 19**: Biblioteca para construção de interfaces.
+- **Vite**: Build tool extremamente rápido.
+- **TypeScript**: Superset de JavaScript com tipagem estática.
+- **React Router Dom**: Gerenciamento de rotas.
+- **Lucide React**: Biblioteca de ícones.
+
+## Scripts Disponíveis
+
+- `npm run dev`: Inicia o servidor de desenvolvimento.
+- `npm run build`: Gera a versão de produção.
+- `npm run lint`: Executa a verificação do ESLint.
+- `npm run preview`: Visualiza o build de produção localmente.
