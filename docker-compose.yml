@@ -10,6 +10,12 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   backend:
     build: ./DT-backend
@@ -17,7 +23,8 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       database.default.hostname: db
       database.default.database: dt_deltaglobal
@@ -32,7 +39,7 @@ services:
     depends_on:
       - backend
     environment:
-      - VITE_API_URL=http://localhost:8080
+      - VITE_API_URL=http://localhost:8080/index.php
 
 volumes:
   db_data:

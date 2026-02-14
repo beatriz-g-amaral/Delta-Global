@@ -19,6 +19,16 @@ seguintes tarefas:
 4. Atualizar as informações de um aluno.
 5. Excluir um aluno do sistema.
 
+Como iniciar a avaliacao:
+Pelo docker: docker compose up --build
+Fora do docker: Seguir ReadMe das aplicacoes
+
+Fiz um professor de exemplo( a ideia é ter a criacao de professorers)
+Usuairo: mariasilva@example.com
+Senha: password123
+
+Precisa criar uma turrma para poder criar um aluno.
+
 Abordagem utilizada:
 
 Para iniciar a criação do projeto, decidi, visando uma melhor organização, deixar separado uma pasta central com o nome da empresa dentro da qual há duas pastas para o front e back end, nomeadas de DT(desafio técnico)-front/back. Junto disso, adicionei o readme com as abordagens e informações relevantes ao projeto.

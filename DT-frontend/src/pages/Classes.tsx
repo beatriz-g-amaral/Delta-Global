@@ -119,14 +119,14 @@ export default function ClassesPage() {
         <header className="page-header">
           <div className="header-info">
             <h1 className="page-title">Turmas</h1>
-            <p className="page-subtitle">Gerencie os turmas do sistema</p>
+            <p className="page-subtitle">Gerencie as turmas do sistema</p>
           </div>
         </header>
 
         <div className="page-layout">
           <section className="page-content">
             <div className="section-header">
-              <h2 className="section-title">Todos os turmas</h2>
+              <h2 className="section-title">Todos as turmas</h2>
               <div className="section-actions">
                 <button className="add-btn" onClick={() => setIsAddModalOpen(true)}>Adicionar turma</button>
               </div>
@@ -221,7 +221,7 @@ export default function ClassesPage() {
           </div>
         </Modal>
 
-=        <Modal
+        <Modal
           isOpen={isDeleteModalOpen}
           onClose={() => { if (!isSubmitting) setIsDeleteModalOpen(false); }}
           title="Confirmar Exclusão"

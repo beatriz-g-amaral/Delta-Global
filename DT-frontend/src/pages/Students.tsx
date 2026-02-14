@@ -9,13 +9,17 @@ import { Student } from '../types/Students';
 import { Input } from '../components/ui/Input';
 import { useClasses } from '../hooks/use-classes';
 
+import { useNavigate } from 'react-router-dom';
+
 export default function Students() {
+  const navigate = useNavigate();
   const { students, removeStudent, addStudent, updateStudent, fetchStudentsWithFilters } = useStudents();
   const { classes } = useClasses();
   const [selectedStudentId, setSelectedStudentId] = useState<number | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isNoClassesModalOpen, setIsNoClassesModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   
@@ -71,6 +75,10 @@ export default function Students() {
   };
 
   const handleAdd = async () => {
+    if (!formData.class_id) {
+      alert('Por favor, selecione uma turma.');
+      return;
+    }
     setIsSubmitting(true);
     try {
       await addStudent({
@@ -104,6 +112,10 @@ export default function Students() {
 
   const handleUpdate = async () => {
     if (selectedStudentId && selectedStudent) {
+      if (!formData.class_id) {
+        alert('Por favor, selecione uma turma.');
+        return;
+      }
       setIsSubmitting(true);
       try {
         await updateStudent({
@@ -140,7 +152,18 @@ export default function Students() {
             <div className="section-header">
               <h2 className="section-title">Todos os alunos</h2>
               <div className="section-actions">
-                <button className="add-btn" onClick={() => setIsAddModalOpen(true)}>Adicionar aluno</button>
+                <button
+                  className="add-btn"
+                  onClick={() => {
+                    if (classes.length === 0) {
+                      setIsNoClassesModalOpen(true);
+                    } else {
+                      setIsAddModalOpen(true);
+                    }
+                  }}
+                >
+                  Adicionar aluno
+                </button>
               </div>
             </div>
             <div className="items-grid">
@@ -218,7 +241,7 @@ export default function Students() {
           footer={
             <>
               <Button variant="outline" onClick={() => { setIsAddModalOpen(false); resetForm(); }} disabled={isSubmitting}>Cancelar</Button>
-              <Button variant="secondary" onClick={handleAdd} isLoading={isSubmitting}>Salvar</Button>
+              <Button variant="secondary" onClick={handleAdd} isLoading={isSubmitting} disabled={!formData.class_id}>Salvar</Button>
             </>
           }
         >
@@ -247,7 +270,7 @@ export default function Students() {
           footer={
             <>
               <Button variant="outline" onClick={() => { setIsEditModalOpen(false); resetForm(); }} disabled={isSubmitting}>Cancelar</Button>
-              <Button variant="secondary" onClick={handleUpdate} isLoading={isSubmitting}>Atualizar</Button>
+              <Button variant="secondary" onClick={handleUpdate} isLoading={isSubmitting} disabled={!formData.class_id}>Atualizar</Button>
             </>
           }
         >
@@ -281,6 +304,21 @@ export default function Students() {
           }
         >
           <p>Tem certeza que deseja remover o aluno <strong>{selectedStudent?.name}</strong>? Esta ação não pode ser desfeita.</p>
+        </Modal>
+
+        <Modal
+          isOpen={isNoClassesModalOpen}
+          onClose={() => setIsNoClassesModalOpen(false)}
+          title="Nenhuma Turma Encontrada"
+          footer={
+            <>
+              <Button variant="outline" onClick={() => setIsNoClassesModalOpen(false)}>Cancelar</Button>
+              <Button variant="secondary" onClick={() => navigate('/classes')}>Criar Turma</Button>
+            </>
+          }
+        >
+          <p>Você não pode cadastrar um aluno sem antes ter uma turma definida.</p>
+          <p>Deseja ser redirecionado para a tela de criação de turmas agora?</p>
         </Modal>
       </main>
     </div>
