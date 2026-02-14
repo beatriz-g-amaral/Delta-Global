@@ -1,4 +1,5 @@
-import { type InputHTMLAttributes, forwardRef } from 'react';
+import { type InputHTMLAttributes, forwardRef, useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import './Input.css';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -8,7 +9,16 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, required, className = '', ...props }, ref) => {
+  ({ label, error, required, type, className = '', ...props }, ref) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const isPassword = type === 'password';
+
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
+
+    const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
+
     return (
       <div className="input-container">
         {label && (
@@ -16,11 +26,24 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             {label} {required && <span style={{ color: '#ef4444' }}>*</span>}
           </label>
         )}
-        <input
-          ref={ref}
-          className={`input-field ${error ? 'input-error-border' : ''} ${className}`}
-          {...props}
-        />
+        <div className="input-relative-wrapper">
+          <input
+            ref={ref}
+            type={inputType}
+            className={`input-field ${error ? 'input-error-border' : ''} ${isPassword ? 'input-password-padding' : ''} ${className}`}
+            {...props}
+          />
+          {isPassword && (
+            <button
+              type="button"
+              className="password-toggle-btn"
+              onClick={togglePasswordVisibility}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          )}
+        </div>
         {error && (
           <span className="input-error-message">{error}</span>
         )}
