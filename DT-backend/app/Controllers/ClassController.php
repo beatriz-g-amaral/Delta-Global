@@ -35,7 +35,7 @@ class ClassController extends ResourceController
             $errors = $this->validator->getErrors();
             return $this->fail([
                 'status'  => false,
-                'message' => 'Erro de validação',
+                'message' => 'Validation error',
                 'errors'  => $errors
             ], 400);
         }
@@ -58,7 +58,7 @@ class ClassController extends ResourceController
 
         return $this->fail([
             'status'  => false,
-            'message' => 'Erro ao salvar turma',
+            'message' => 'Error on save class',
             'errors'  => $this->model->errors()
         ]);
     }
@@ -83,7 +83,7 @@ class ClassController extends ResourceController
             $errors = $this->validator->getErrors();
             return $this->fail([
                 'status'  => false,
-                'message' => 'Erro de validação',
+                'message' => 'Validation error',
                 'errors'  => $errors
             ], 400);
         }
@@ -109,7 +109,7 @@ class ClassController extends ResourceController
 
         return $this->fail([
             'status'  => false,
-            'message' => 'Erro ao atualizar turma',
+            'message' => 'Error on update class',
             'errors'  => $this->model->errors()
         ]);
     }

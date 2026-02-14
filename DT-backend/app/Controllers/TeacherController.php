@@ -34,7 +34,12 @@ class TeacherController extends ResourceController
         ];
 
         if (!$this->validate($rules)) {
-            return $this->fail($this->validator->getErrors());
+            $errors = $this->validator->getErrors();
+            return $this->fail([
+                'status'  => false,
+                'message' => 'Validation error',
+                'errors'  => $errors
+            ], 400);
         }
 
         $data = $this->request->getPost();
@@ -49,15 +54,32 @@ class TeacherController extends ResourceController
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
         if ($this->model->insert($data)) {
-            return $this->respondCreated(['status' => true, 'message' => 'Teacher saved!']);
+            $insertedId = $this->model->getInsertID();
+            $newTeacher = $this->model
+                               ->select('id, name, email, subject, picture, created_at')
+                               ->find($insertedId);
+
+            return $this->respondCreated([
+                'status'  => true,
+                'message' => 'Teacher saved!',
+                'result'  => $newTeacher
+            ]);
         }
 
-        return $this->fail($this->model->errors());
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Error on save professor',
+            'errors'  => $this->model->errors()
+        ]);
     }
 
     public function update($id = null)
     {
-        $data = $this->request->getRawInput();
+        $data = $this->request->getPost();
+        
+        if (empty($data)) {
+            $data = $this->request->getRawInput();
+        }
 
         $rules = [
             'name'     => 'permit_empty|min_length[3]',
@@ -67,7 +89,12 @@ class TeacherController extends ResourceController
         ];
 
         if (!$this->validate($rules)) {
-            return $this->fail($this->validator->getErrors());
+            $errors = $this->validator->getErrors();
+            return $this->fail([
+                'status'  => false,
+                'message' => 'Validation error',
+                'errors'  => $errors
+            ], 400);
         }
 
         if (!empty($data['password'])) {
@@ -83,11 +110,29 @@ class TeacherController extends ResourceController
             $data['picture'] = 'uploads/teachers/' . $newName;
         }
 
-        if ($this->model->update($id, $data)) {
-            return $this->respond(['message' => 'Teacher Updated!']);
+        unset($data['_method']);
+
+        if (empty($data)) {
+            return $this->respond(['status' => true, 'message' => 'Nothing to update']);
         }
 
-        return $this->fail('Something went wrong while updating the teacher.');
+        if ($this->model->update($id, $data)) {
+            $updatedTeacher = $this->model
+                                   ->select('id, name, email, subject, picture, created_at')
+                                   ->find($id);
+
+            return $this->respond([
+                'status'  => true,
+                'message' => 'Teacher Updated!',
+                'result'  => $updatedTeacher
+            ]);
+        }
+
+        return $this->fail([
+            'status'  => false,
+            'message' => 'Error on update professor',
+            'errors'  => $this->model->errors()
+        ]);
     }
 
     public function delete($id = null)

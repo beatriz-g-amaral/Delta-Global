@@ -70,6 +70,7 @@ export function useStudents() {
     };
 
     const updateStudent = async (studentData: Student & { pictureFile?: File | undefined }) => {
+        setError(null);
         const token = localStorage.getItem("token") || "";
         const response = await StudentsCall.update({
             token,

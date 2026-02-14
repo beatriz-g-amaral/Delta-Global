@@ -65,6 +65,7 @@ export function useClasses() {
     };
 
     const updateClass = async (classData: Pick<Classes, "id" | "name" | "teacher_id">) => {
+        setError(null);
         const token = localStorage.getItem("token") || "";
         const response = await ClassesCall.update({
             token,

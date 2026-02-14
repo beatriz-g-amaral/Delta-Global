@@ -43,7 +43,7 @@ class StudentsController extends ResourceController
             $errors = $this->validator->getErrors();
             return $this->fail([
                 'status'  => false,
-                'message' => 'Erro de validação',
+                'message' => 'Validation error',
                 'errors'  => $errors
             ], 400);
         }
@@ -77,7 +77,7 @@ class StudentsController extends ResourceController
 
         return $this->fail([
             'status'  => false,
-            'message' => 'Erro ao salvar estudante',
+            'message' => 'Error on save student',
             'errors'  => $this->model->errors()
         ]);
     }
@@ -98,7 +98,12 @@ class StudentsController extends ResourceController
         ];
 
         if (!$this->validate($rules)) {
-            return $this->fail($this->validator->getErrors());
+            $errors = $this->validator->getErrors();
+            return $this->fail([
+                'status'  => false,
+                'message' => 'Validation error',
+                'errors'  => $errors
+            ], 400);
         }
 
         $file = $this->request->getFile('picture');
