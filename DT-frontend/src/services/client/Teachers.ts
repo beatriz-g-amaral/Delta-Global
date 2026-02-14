@@ -28,7 +28,7 @@ export class TeachersCall {
     email: string;
     subject: string;   
     password: string; 
-    pictureFile?: File;
+    pictureFile?: File | undefined;
   }): Promise<ApiCallResponse<TeachersResponse>> {
     const apiURL = import.meta.env.VITE_API_URL;
 
@@ -68,7 +68,7 @@ export class TeachersCall {
     name: string;
     password?: string;
     email: string;
-    pictureFile?: File;
+    pictureFile?: File | undefined;
     subject: string;
   }): Promise<ApiCallResponse<TeachersResponse>> {
     const apiURL = import.meta.env.VITE_API_URL;

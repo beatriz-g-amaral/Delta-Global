@@ -28,7 +28,7 @@ export class StudentsCall {
     email: string;
     phone: string;
     address: string;
-    pictureFile?: File;
+    pictureFile?: File | undefined;
     class_id: number;
   }): Promise<ApiCallResponse<StudentsResponse>> {
     const apiURL = import.meta.env.VITE_API_URL;
@@ -71,7 +71,7 @@ export class StudentsCall {
     email: string;
     phone: string;
     address: string;
-    pictureFile?: File;
+    pictureFile?: File | undefined;
     class_id: number;
   }): Promise<ApiCallResponse<StudentsResponse>> {
     const apiURL = import.meta.env.VITE_API_URL;

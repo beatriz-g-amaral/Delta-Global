@@ -3,10 +3,10 @@ export interface Student {
   name: string;
   email: string;
   phone: string;
-  address?: string;
-  picture?: string;
+  address?: string | undefined;
+  picture?: string | undefined;
   class_id: number;
-  class_name?: string;
+  class_name?: string | undefined;
 }
 
 export interface StudentsResponse {
