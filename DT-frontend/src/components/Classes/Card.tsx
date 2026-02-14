@@ -1,5 +1,5 @@
 import React from 'react';
-import './Card.css';
+import '../students/Card.css';
 
 interface ClassCardProps {
   name: string;
