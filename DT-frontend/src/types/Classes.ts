@@ -1,0 +1,13 @@
+export interface ClassRoom {
+  id: number;
+  name: string;
+  teacher_id: number;
+  teacher_name?: string; 
+  created_at: string;
+}
+
+export interface ClassesResponse {
+  status: boolean;
+  message?: string;
+  result: Array<ClassRoom> | ClassRoom;
+}

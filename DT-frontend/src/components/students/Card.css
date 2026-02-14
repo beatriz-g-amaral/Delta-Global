@@ -1,0 +1,89 @@
+.student-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: #fff;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  transition: transform 0.2s;
+}
+
+.student-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.student-avatar {
+  color: #004dc0;
+  background-color: #f0f4ff;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.student-info {
+  flex: 1;
+}
+
+.student-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.student-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+}
+
+.student-class {
+  color: #666;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.student-occurrence {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.card-summary {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  min-width: 200px;
+}
+
+.card-summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card-summary-title {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 600;
+}
+
+.card-summary-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #004dc0;
+}
+
+.card-summary-icon {
+  color: #004dc0;
+  opacity: 0.2;
+}
