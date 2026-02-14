@@ -92,6 +92,16 @@ type ConnectionErrorListener = () => void;
         }
   
         const response = await fetch(url.toString(), options)
+        if (response.status === 401) {
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+            return {
+                success: false,
+                error: "Sessão expirada. Por favor, faça login novamente.",
+                statusCode: 401,
+            };
+        }
+
         if (!response.ok) {
             let errorData;
             try {
@@ -104,9 +114,26 @@ type ConnectionErrorListener = () => void;
                     statusCode: response.status,
                 };
             }
+            let errorMessage = "API call failed";
+            if (errorData.messages) {
+              if (typeof errorData.messages === 'object') {
+                if (errorData.messages.errors) {
+                   errorMessage = Object.values(errorData.messages.errors).join(' ');
+                } else if (errorData.messages.message) {
+                   errorMessage = errorData.messages.message;
+                }
+              } else {
+                errorMessage = errorData.messages;
+              }
+            } else if (errorData.error) {
+               errorMessage = errorData.error;
+            } else if (errorData.msg) {
+               errorMessage = errorData.msg;
+            }
+
             return {
                 success: false,
-                error: errorData.msg || errorData.error || "API call failed",
+                error: errorMessage,
                 statusCode: response.status,
                 data: errorData,
             };
