@@ -130,7 +130,7 @@ export default function ClassesPage() {
         <div className="page-layout">
           <section className="page-content">
             <div className="section-header">
-              <h2 className="section-title">Todos as turmas</h2>
+              <h2 className="section-title">Todas as turmas</h2>
               <div className="section-actions">
                 <button className="add-btn" onClick={() => setIsAddModalOpen(true)}>Adicionar turma</button>
               </div>
