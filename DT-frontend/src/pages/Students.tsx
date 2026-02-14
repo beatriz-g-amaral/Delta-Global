@@ -255,12 +255,12 @@ export default function Students() {
                 {error}
               </div>
             )}
-            <Input label="Nome" name="name" value={formData.name} onChange={handleInputChange} placeholder="Nome completo" disabled={isSubmitting} />
-            <Input label="E-mail" name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder="email@exemplo.com" disabled={isSubmitting} />
-            <Input label="Telefone" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="(00) 00000-0000" disabled={isSubmitting} />
+            <Input label="Nome" name="name" value={formData.name} onChange={handleInputChange} placeholder="Nome completo" disabled={isSubmitting} required />
+            <Input label="E-mail" name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder="email@exemplo.com" disabled={isSubmitting} required />
+            <Input label="Telefone" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="(00) 00000-0000" disabled={isSubmitting} required />
             <Input label="Endereço" name="address" value={formData.address} onChange={handleInputChange} placeholder="Rua, Número, Bairro" disabled={isSubmitting} />
             <div className="input-container">
-              <label className="input-label">Turma</label>
+              <label className="input-label">Turma <span style={{ color: '#ef4444' }}>*</span></label>
               <select name="class_id" value={formData.class_id} onChange={handleInputChange} className="input-field" disabled={isSubmitting}>
                 <option value="">Selecione uma turma</option>
                 {classes.map(c => (
@@ -289,12 +289,12 @@ export default function Students() {
                 {error}
               </div>
             )}
-            <Input label="Nome" name="name" value={formData.name} onChange={handleInputChange} disabled={isSubmitting} />
-            <Input label="E-mail" name="email" type="email" value={formData.email} onChange={handleInputChange} disabled={isSubmitting} />
-            <Input label="Telefone" name="phone" value={formData.phone} onChange={handleInputChange} disabled={isSubmitting} />
+            <Input label="Nome" name="name" value={formData.name} onChange={handleInputChange} disabled={isSubmitting} required />
+            <Input label="E-mail" name="email" type="email" value={formData.email} onChange={handleInputChange} disabled={isSubmitting} required />
+            <Input label="Telefone" name="phone" value={formData.phone} onChange={handleInputChange} disabled={isSubmitting} required />
             <Input label="Endereço" name="address" value={formData.address} onChange={handleInputChange} disabled={isSubmitting} />
             <div className="input-container">
-              <label className="input-label">Turma</label>
+              <label className="input-label">Turma <span style={{ color: '#ef4444' }}>*</span></label>
               <select name="class_id" value={formData.class_id} onChange={handleInputChange} className="input-field" disabled={isSubmitting}>
                 <option value="">Selecione uma turma</option>
                 {classes.map(c => (

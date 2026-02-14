@@ -4,15 +4,16 @@ import './Input.css';
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
+  required?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, className = '', ...props }, ref) => {
+  ({ label, error, required, className = '', ...props }, ref) => {
     return (
       <div className="input-container">
         {label && (
           <label className="input-label">
-            {label}
+            {label} {required && <span style={{ color: '#ef4444' }}>*</span>}
           </label>
         )}
         <input

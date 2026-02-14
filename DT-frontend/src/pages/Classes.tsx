@@ -192,9 +192,9 @@ export default function ClassesPage() {
                 {error}
               </div>
             )}
-            <Input label="Nome da Turma" name="name" value={formData.name} onChange={handleInputChange} placeholder="Ex: 1º Ano A" disabled={isSubmitting} />
+            <Input label="Nome da Turma" name="name" value={formData.name} onChange={handleInputChange} placeholder="Ex: 1º Ano A" disabled={isSubmitting} required />
             <div className="input-container">
-              <label className="input-label">Professor</label>
+              <label className="input-label">Professor <span style={{ color: '#ef4444' }}>*</span></label>
               <select name="teacher_id" value={formData.teacher_id} onChange={handleInputChange} className="input-field" disabled={isSubmitting}>
                 <option value="">Selecione um professor</option>
                 {teachers.map(t => (
@@ -222,9 +222,9 @@ export default function ClassesPage() {
                 {error}
               </div>
             )}
-            <Input label="Nome da Turma" name="name" value={formData.name} onChange={handleInputChange} disabled={isSubmitting} />
+            <Input label="Nome da Turma" name="name" value={formData.name} onChange={handleInputChange} disabled={isSubmitting} required />
             <div className="input-container">
-              <label className="input-label">Professor</label>
+              <label className="input-label">Professor <span style={{ color: '#ef4444' }}>*</span></label>
               <select name="teacher_id" value={formData.teacher_id} onChange={handleInputChange} className="input-field" disabled={isSubmitting}>
                 <option value="">Selecione um professor</option>
                 {teachers.map(t => (
