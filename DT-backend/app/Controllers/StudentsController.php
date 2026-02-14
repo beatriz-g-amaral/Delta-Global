@@ -115,7 +115,20 @@ class StudentsController extends ResourceController
         }
 
         if ($this->model->update($id, $data)) {
-            return $this->respond(['status' => true, 'message' => 'Student updated!']);
+            $updatedStudent = $this->model
+                                   ->select('students.*, classes.name as class_name')
+                                   ->join('classes', 'classes.id = students.class_id', 'left')
+                                   ->find($id);
+            
+            if ($updatedStudent && $updatedStudent['picture']) {
+                $updatedStudent['picture'] = base_url($updatedStudent['picture']);
+            }
+
+            return $this->respond([
+                'status'  => true,
+                'message' => 'Student updated!',
+                'result'  => $updatedStudent
+            ]);
         }
 
         return $this->fail('Update failed');
