@@ -302,7 +302,7 @@ export default function Students() {
                 ))}
               </select>
             </div>
-            <Input label="Alterar Foto (opcional)" type="file" onChange={handleFileChange} accept="image/*" disabled={isSubmitting} />
+            <Input label="Alterar Foto" type="file" onChange={handleFileChange} accept="image/*" disabled={isSubmitting} />
           </div>
         </Modal>
 
