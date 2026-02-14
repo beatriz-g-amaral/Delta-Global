@@ -82,9 +82,9 @@ class TeacherController extends ResourceController
         }
 
         $rules = [
-            'name'     => 'permit_empty|min_length[3]',
-            'subject'  => 'permit_empty|min_length[3]',
-            'email'    => "permit_empty|valid_email|is_unique[teachers.email,id,{$id}]",
+            'name'     => 'required|min_length[3]',
+            'subject'  => 'required|min_length[3]',
+            'email'    => "required|valid_email|is_unique[teachers.email,id,{$id}]",
             'password' => 'permit_empty|min_length[6]'
         ];
 

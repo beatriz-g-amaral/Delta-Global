@@ -91,10 +91,10 @@ class StudentsController extends ResourceController
         }
 
         $rules = [
-            'name'     => 'permit_empty|min_length[3]',
-            'email'    => "permit_empty|valid_email|is_unique[students.email,id,{$id}]",
-            'phone'    => 'permit_empty|numeric',
-            'class_id' => 'permit_empty|is_not_unique[classes.id]'
+            'name'     => 'required|min_length[3]',
+            'email'    => "required|valid_email|is_unique[students.email,id,{$id}]",
+            'phone'    => 'required|numeric',
+            'class_id' => 'required|is_not_unique[classes.id]'
         ];
 
         if (!$this->validate($rules)) {

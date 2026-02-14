@@ -75,8 +75,8 @@ class ClassController extends ResourceController
         }
         
         $rules = [
-            'name'     => 'permit_empty|min_length[3]',
-            'teacher_id'    => 'permit_empty|is_not_unique[teachers.id]',
+            'name'     => 'required|min_length[3]',
+            'teacher_id'    => 'required|is_not_unique[teachers.id]',
         ];
 
         if (!$this->validate($rules)) {
